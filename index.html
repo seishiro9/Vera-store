@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Veraa ❄ Store • Aplikasi Jualan</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--app-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .app-container {
+            max-width: 450px;
+            margin: 0 auto;
+            background: var(--app-bg);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .app-header {
+            padding: 1.5rem 1.2rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .avatar-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-light);
+        }
+
+        .profile-text h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .profile-text p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        /* Theme Section dengan Video */
+        .theme-section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: var(--card-bg);
+            border-radius: 40px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .theme-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            z-index: 1;
+            position: relative;
+        }
+
+        .theme-video {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-primary);
+        }
+
+        .theme-selector {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-selector label {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-left: 0.5rem;
+        }
+
+        .theme-selector select {
+            background: var(--input-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            flex: 1;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 1rem 1.2rem 1rem;
+            overflow-y: auto;
+        }
+
+        /* Home Page - Motivasi */
+        .motivation-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .motivation-icon {
+            font-size: 3rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+
+        .motivation-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .motivation-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            background: var(--button-gradient);
+            border: none;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: var(--payment-bg);
+            border-radius: 20px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-item i {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-item p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Store Grid */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 0.8rem;
+            background: var(--input-bg);
+        }
+
+        .product-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+        }
+
+        .product-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: var(--accent-primary);
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .btn-beli {
+            background: var(--button-gradient);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-size: 200% auto;
+        }
+
+        .btn-beli:hover {
+            transform: scale(1.02);
+            background-position: right center;
+        }
+
+        /* Social Buttons */
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.3s;
+            border: none;
+            background-size: 200% auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            background-position: right center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .social-btn.gb {
+            background-image: linear-gradient(to right, #4285F4, #34A853, #FBBC05, #EA4335);
+        }
+        .social-btn.telegram {
+            background-image: linear-gradient(to right, #1DA1F2, #0d8ec4);
+        }
+        .social-btn.ig {
+            background-image: linear-gradient(to right, #f09433, #d62976, #962fbf);
+        }
+        .social-btn.tiktok {
+            background-image: linear-gradient(to right, #010101, #69C9D0, #EE1D52);
+        }
+        .social-btn.scammer {
+            background-image: linear-gradient(to right, #dc2626, #b91c1c);
+        }
+
+        /* Profile Page */
+        .profile-section {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .seller-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-primary);
+            margin: 0 auto 1rem;
+            display: block;
+        }
+
+        .social-profile {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .payment-btn {
+            background: var(--payment-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: var(--text-primary);
+        }
+
+        .payment-btn:hover {
+            border-color: var(--accent-primary);
+            background: var(--payment-hover);
+        }
+
+        .payment-btn i {
+            font-size: 1.8rem;
+        }
+
+        .payment-btn span {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .payment-btn .dana { color: #93c5fd; }
+        .payment-btn .ovo { color: #a78bfa; }
+        .payment-btn .gopay { color: #4ade80; }
+        .payment-btn .qris { color: #facc15; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 350px;
+            border-radius: 40px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            margin: 1rem auto;
+            display: block;
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+        }
+
+        .download-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 40px;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        /* Music Player Global */
+        .global-music-player {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .global-music-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .global-music-info h4 {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .global-music-info p {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .global-music-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .global-music-controls button {
+            background: none;
+            border: none;
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .global-music-controls button:hover {
+            background: var(--nav-active-bg);
+        }
+
+        .global-music-controls .play-pause {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .music-playlist {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .playlist-item:hover {
+            background: var(--payment-hover);
+            border-color: var(--border-color);
+        }
+
+        .playlist-item.active {
+            background: var(--nav-active-bg);
+            border-color: var(--accent-primary);
+        }
+
+        .playlist-item .music-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .playlist-item .music-info {
+            flex: 1;
+        }
+
+        .playlist-item h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: var(--nav-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0 0.8rem;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.7rem;
+            gap: 0.2rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .nav-item.active {
+            color: var(--accent-primary);
+            background: var(--nav-active-bg);
+        }
+
+        /* Contact Info */
+        .contact-info {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        /* TEMA DEFAULT (UNGU) */
+        :root, body.theme-default {
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #c084fc;
+            --accent-light: #a78bfa;
+            --button-gradient: linear-gradient(to right, #8b5cf6, #7c3aed);
+            
+            --app-bg: #0f0b1a;
+            --card-bg: #1a142f;
+            --nav-bg: #0f0b1a;
+            --nav-active-bg: #2d1f4a;
+            --input-bg: #1a142f;
+            --testimoni-bg: #1a142f;
+            --payment-bg: #1a142f;
+            --payment-hover: #2a1f40;
+            --border-color: #3b2d5c;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #b9a9e6;
+            
+            --avatar-bg-start: #8b5cf6;
+            --avatar-bg-end: #c084fc;
+        }
+
+        /* TEMA BIRU ELEGAN */
+        body.theme-blue {
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-light: #60a5fa;
+            --button-gradient: linear-gradient(to right, #3b82f6, #2563eb);
+            
+            --app-bg: #12161f;
+            --card-bg: #1a2230;
+            --nav-bg: #12161f;
+            --nav-active-bg: #1e293b;
+            --input-bg: #0f172a;
+            --testimoni-bg: #0f1825;
+            --payment-bg: #0f172a;
+            --payment-hover: #1a2635;
+            --border-color: #2d3748;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            
+            --avatar-bg-start: #2a3a55;
+            --avatar-bg-end: #1f2a40;
+        }
+
+        /* TEMA PUTIH MURNI */
+        body.theme-white {
+            --accent-primary: #2563eb;
+            --accent-secondary: #7c3aed;
+            --accent-light: #3b82f6;
+            --button-gradient: linear-gradient(to right, #2563eb, #4f46e5);
+            
+            --app-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --nav-bg: #ffffff;
+            --nav-active-bg: #e2e8f0;
+            --input-bg: #f1f5f9;
+            --testimoni-bg: #f1f5f9;
+            --payment-bg: #ffffff;
+            --payment-hover: #f1f5f9;
+            --border-color: #e2e8f0;
+            
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            
+            --avatar-bg-start: #2563eb;
+            --avatar-bg-end: #7c3aed;
+        }
+
+        /* TEMA HIJAU KEBIRUAN */
+        body.theme-cyan {
+            --accent-primary: #0ea5e9;
+            --accent-secondary: #10b981;
+            --accent-light: #6ee7b7;
+            --button-gradient: linear-gradient(to right, #0ea5e9, #10b981);
+            
+            --app-bg: #0b1f2e;
+            --card-bg: #133240;
+            --nav-bg: #0b1f2e;
+            --nav-active-bg: #1e4a5a;
+            --input-bg: #0a2a38;
+            --testimoni-bg: #0a2a38;
+            --payment-bg: #0a2a38;
+            --payment-hover: #1a4050;
+            --border-color: #2d5f6e;
+            
+            --text-primary: #e2f0f9;
+            --text-secondary: #9ec8d9;
+            
+            --avatar-bg-start: #0ea5e9;
+            --avatar-bg-end: #10b981;
+        }
+    </style>
+</head>
+<body class="theme-default">
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <div class="profile-row">
+                <img src="https://cdn.nekohime.site/file/2M8Y7GrA.jpeg" class="avatar-large" alt="Seller">
+                <div class="profile-text">
+                    <h2>Veraa ❄ Store</h2>
+                    <p><i class="fas fa-star" style="color: #fbbf24;"></i> 5.0 • 300+ pelanggan</p>
+                    <p style="font-size:0.75rem;"><i class="fas fa-shield-alt" style="color:var(--accent-primary);"></i> Trusted Since 2024</p>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-value">300+</div>
+                    <div class="stat-label">Transaksi</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Puas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24 Jam</div>
+                    <div class="stat-label">Respon</div>
+                </div>
+            </div>
+
+            <!-- Theme Selector dengan Video Latar -->
+            <div class="theme-section">
+                <video class="theme-background-video" autoplay loop muted playsinline>
+                    <source src="https://cdn.nekohime.site/file/90bG2Fhc.mp4" type="video/mp4">
+                </video>
+                <div class="theme-content">
+                    <video class="theme-video" autoplay loop muted playsinline>
+                        <source src="https://cdn.nekohime.site/file/90bG2Fhc.mp4" type="video/mp4">
+                    </video>
+                    <div class="theme-selector">
+                        <label for="themeSelect"><i class="fas fa-palette"></i> Tema:</label>
+                        <select id="themeSelect">
+                            <option value="default">Ungu Elegan</option>
+                            <option value="blue">Biru Elegan</option>
+                            <option value="white">Putih Murni</option>
+                            <option value="cyan">Hijau Kebiruan</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area" id="contentArea"></div>
+
+        <!-- Global Music Player -->
+        <div class="global-music-player" id="globalMusicPlayer">
+            <div class="global-music-info">
+                <h4 id="nowPlayingTitle">DJ ku tak sanggup lagi</h4>
+                <p id="nowPlayingArtist">Lo-fi Relax • 3:03</p>
+            </div>
+            <div class="global-music-controls">
+                <button id="prevTrack"><i class="fas fa-step-backward"></i></button>
+                <button class="play-pause" id="playPauseBtn"><i class="fas fa-play"></i></button>
+                <button id="nextTrack"><i class="fas fa-step-forward"></i></button>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="#" class="nav-item" data-page="store"><i class="fas fa-store"></i><span>Store</span></a>
+            <a href="#" class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>Profile</span></a>
+            <a href="#" class="nav-item" data-page="music"><i class="fas fa-music"></i><span>Music</span></a>
+        </div>
+    </div>
+
+    <!-- Modal QRIS -->
+    <div class="modal-overlay" id="qrModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom:1rem;">QRIS Pembayaran</h3>
+            <img src="" class="qr-image" id="qrImage" alt="QRIS">
+            <p style="margin:1rem 0;">Scan atau download QR</p>
+            <button class="download-btn" id="downloadQR"><i class="fas fa-download"></i> Download QR</button>
+            <button class="download-btn" id="closeQR" style="background:#4b5563; margin-top:0.5rem;">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ==================== KONFIGURASI ====================
+            const SELLER_PHONE = '6288286601820';
+            const SELLER_AVATAR_URL = 'https://cdn.nekohime.site/file/2M8Y7GrA.jpeg';
+            const PAYMENT_NUMBER = '088286601820';
+            const PAYMENT_GOPAY = '082282931897';
+            
+            // 🔴 GANTI DENGAN RAW URL PRODUK JSON DARI GITHUB ANDA
+            const PRODUCTS_JSON_URL = 'https://raw.githubusercontent.com/username/repo/main/products.json';
+
+            const THEME_KEY = 'veraa_theme';
+
+            // Playlist lagu
+            const playlist = [
+                {
+                    title: 'DJ ku tak sanggup lagi',
+                    artist: 'Lo-fi Relax • 3:03',
+                    src: 'https://image2url.com/r2/default/audio/1773726947341-f07acc5a-c1ae-4db0-8f1f-cf2f79617dac.mp3'
+                },
+                {
+                    title: 'Bukan Cinta Biasa',
+                    artist: 'Instrumental • 2:30',
+                    src: 'https://image2url.com/r2/default/audio/1773727036021-04d53c35-9fdd-40ed-a5b8-09e118637666.mp3'
+                }
+            ];
+
+            let currentTrack = 0;
+            const audio = new Audio(playlist[currentTrack].src);
+            audio.preload = 'metadata';
+
+            // Theme switcher
+            const themeSelect = document.getElementById('themeSelect');
+            const body = document.body;
+            const savedTheme = localStorage.getItem(THEME_KEY) || 'default';
+            setTheme(savedTheme);
+            themeSelect.value = savedTheme;
+
+            themeSelect.addEventListener('change', (e) => {
+                const theme = e.target.value;
+                setTheme(theme);
+                localStorage.setItem(THEME_KEY, theme);
+            });
+
+            function setTheme(theme) {
+                body.className = '';
+                body.classList.add(`theme-${theme}`);
+            }
+
+            // UI Music Player
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const prevBtn = document.getElementById('prevTrack');
+            const nextBtn = document.getElementById('nextTrack');
+            const nowPlayingTitle = document.getElementById('nowPlayingTitle');
+            const nowPlayingArtist = document.getElementById('nowPlayingArtist');
+
+            function updatePlayerUI() {
+                nowPlayingTitle.textContent = playlist[currentTrack].title;
+                nowPlayingArtist.textContent = playlist[currentTrack].artist;
+                playPauseBtn.innerHTML = audio.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+            }
+
+            audio.addEventListener('play', () => updatePlayerUI());
+            audio.addEventListener('pause', () => updatePlayerUI());
+            audio.addEventListener('ended', () => {
+                nextTrack();
+            });
+
+            playPauseBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                } else {
+                    audio.pause();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+                audio.src = playlist[currentTrack].src;
+                audio.play();
+                updatePlayerUI();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                nextTrack();
+            });
+
+            function nextTrack() {
+                currentTrack = (currentTrack + 1) % playlist.length;
+                audio.src = playlist[currentTrack].src;
+                audio.play();
+                updatePlayerUI();
+            }
+
+            // Wake lock saat audio diputar (jika didukung)
+            audio.addEventListener('play', () => {
+                if ('wakeLock' in navigator) {
+                    navigator.wakeLock.request('screen').catch(() => {});
+                }
+            });
+
+            // Render halaman
+            let currentPage = 'home';
+
+            function renderCurrentPage() {
+                if (currentPage === 'home') renderHome();
+                else if (currentPage === 'store') renderStore();
+                else if (currentPage === 'profile') renderProfile();
+                else if (currentPage === 'music') renderMusic();
+            }
+
+            function renderHome() {
+                const container = document.getElementById('contentArea');
+                container.innerHTML = `
+                    <div class="motivation-card">
+                        <div class="motivation-icon"><i class="fas fa-rocket"></i></div>
+                        <h3 class="motivation-title">Selamat Datang di Veraa ❄ Store!</h3>
+                        <p class="motivation-text">
+                            Kami hadir untuk memenuhi kebutuhan digital Anda dengan pelayanan tercepat, harga termurah, dan produk 100% original. 
+                            Lebih dari 100 pelanggan telah percaya dan puas berbelanja bersama kami. 
+                            Tunggu apalagi? Belanja sekarang dan rasakan pengalaman belanja yang menyenangkan!
+                        </p>
+                        <a href="#" class="cta-button" data-page="store">Mulai Belanja <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-bolt"></i>
+                            <h4>Proses Cepat</h4>
+                            <p>Transaksi diproses dalam hitungan menit</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Aman & Terpercaya</h4>
+                            <p>100% garansi kepuasan</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-headset"></i>
+                            <h4>CS Ramah</h4>
+                            <p>24 jam siap membantu</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-tags"></i>
+                            <h4>Harga Bersaing</h4>
+                            <p>Termurah se-kota</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem; text-align: center; color: var(--text-secondary);">
+                        <p><i class="fas fa-quote-right"></i> Kepuasan pelanggan adalah prioritas kami <i class="fas fa-quote-left"></i></p>
+                    </div>
+                `;
+
+                document.querySelector('.cta-button').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setActivePage('store');
+                });
+            }
+
+            async function renderStore() {
+                const container = document.getElementById('contentArea');
+                try {
+                    const response = await fetch(PRODUCTS_JSON_URL);
+                    if (!response.ok) throw new Error('Gagal memuat produk');
+                    const products = await response.json();
+                    
+                    let html = '<h3 style="margin-bottom:1rem;"><i class="fas fa-tags"></i> Semua Produk</h3><div class="store-grid">';
+                    products.forEach(p => {
+                        html += `
+                            <div class="product-card" data-product="${p.title}" data-price="${p.price}" data-desc="${p.desc}">
+                                <img src="${p.img}" class="product-image" alt="${p.title}">
+                                <div class="product-title">${p.title}</div>
+                                <div class="product-desc">${p.desc}</div>
+                                <div class="product-price">${p.price}</div>
+                                <button class="btn-beli">Beli</button>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    container.innerHTML = html;
+
+                    document.querySelectorAll('.product-card').forEach(card => {
+                        const btn = card.querySelector('.btn-beli');
+                        const title = card.dataset.product;
+                        const price = card.dataset.price;
+                        const desc = card.dataset.desc;
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const message = `Halo kak, saya mau order: ${title} - ${price} (${desc})`;
+                            window.open(`https://wa.me/${SELLER_PHONE}?text=${encodeURIComponent(message)}`, '_blank');
+                        });
+                    });
+                } catch (error) {
+                    container.innerHTML = '<div style="text-align:center; padding:2rem; color:var(--text-secondary);">Gagal memuat produk. Pastikan URL produk JSON benar.</div>';
+                }
+            }
+
+            function renderProfile() {
+                const container = document.getElementById('contentArea');
+                container.innerHTML = `
+                    <div class="profile-section">
+                        <img src="${SELLER_AVATAR_URL}" class="seller-avatar" alt="Seller">
+                        <h2>Veraa ❄ Store</h2>
+                        <p style="color:var(--text-secondary); margin:0.5rem 0;">⭐ 5.0/5.0 • 300+ transaksi</p>
+                        <p><i class="fas fa-map-pin"></i> Indonesia | Online 24 Jam</p>
+                    </div>
+
+                    <div class="social-profile">
+                        <a href="https://chat.whatsapp.com/Ir7I6Vg80cCK3pv7Ef0Hw4?mode=gi_t" class="social-btn gb"><i class="fab fa-google-drive"></i> GB</a>
+                        <a href="https://whatsapp.com/channel/0029Vb9cOtQChq6DMA7jmL3O" target="_blank" class="social-btn telegram"><i class="fab fa-whatsapp"></i> Channel</a>
+                        <a href="#" class="social-btn ig"><i class="fab fa-instagram"></i> IG</a>
+                        <a href="https://tiktok.com/@official_vvibes" class="social-btn tiktok"><i class="fab fa-tiktok"></i> TikTok</a>
+                        <a href="https://wa.me/6285364520733?text=alfin+mamak+nya+dihamilin+goblin" class="social-btn scammer"><i class="fas fa-exclamation-triangle"></i> Scammer</a>
+                    </div>
+
+                    <div class="contact-info">
+                        <h3><i class="fab fa-whatsapp" style="color:#25D366;"></i> Kontak Seller</h3>
+                        <p style="margin:0.5rem 0;">Klik nomor untuk chat</p>
+                        <button class="btn-beli" id="waSellerBtn" style="width:100%; padding:0.8rem;">
+                            <i class="fab fa-whatsapp"></i> 088286601820
+                        </button>
+                    </div>
+
+                    <h3 style="margin:1.5rem 0 1rem;"><i class="fas fa-credit-card"></i> Pembayaran</h3>
+                    <div class="payment-buttons">
+                        <div class="payment-btn" data-method="dana" data-nomor="${PAYMENT_NUMBER}">
+                            <i class="fas fa-university dana"></i><span>DANA</span><small>${PAYMENT_NUMBER}</small>
+                        </div>
+                        <div class="payment-btn" data-method="ovo" data-nomor="${PAYMENT_NUMBER}">
+                            <i class="fas fa-mobile-alt ovo"></i><span>OVO</span><small>${PAYMENT_NUMBER}</small>
+                        </div>
+                        <div class="payment-btn" data-method="gopay" data-nomor="${PAYMENT_GOPAY}">
+                            <i class="fas fa-wallet gopay"></i><span>GoPay</span><small>${PAYMENT_GOPAY}</small>
+                        </div>
+                        <div class="payment-btn" data-method="qris" data-nomor="QRIS">
+                            <i class="fas fa-qrcode qris"></i><span>QRIS</span><small>Lihat QR</small>
+                        </div>
+                    </div>
+                `;
+
+                document.querySelectorAll('.payment-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        if (btn.dataset.method === 'qris') showQRModal();
+                        else copyToClipboard(btn.dataset.nomor);
+                    });
+                });
+
+                document.getElementById('waSellerBtn').addEventListener('click', () => {
+                    window.open(`https://wa.me/${SELLER_PHONE}`, '_blank');
+                });
+            }
+
+            function renderMusic() {
+                const container = document.getElementById('contentArea');
+                let playlistHtml = '<h3 style="margin-bottom:1rem;"><i class="fas fa-headphones"></i> Daftar Lagu</h3>';
+                playlistHtml += '<div class="music-playlist">';
+                playlist.forEach((track, index) => {
+                    const isActive = index === currentTrack;
+                    playlistHtml += `
+                        <div class="playlist-item ${isActive ? 'active' : ''}" data-index="${index}">
+                            <div class="music-icon"><i class="fas fa-music"></i></div>
+                            <div class="music-info">
+                                <h4>${track.title}</h4>
+                                <p>${track.artist}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                playlistHtml += '</div>';
+                container.innerHTML = playlistHtml;
+
+                document.querySelectorAll('.playlist-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const index = parseInt(item.dataset.index);
+                        if (index === currentTrack) {
+                            // Jika lagu sama, toggle play/pause
+                            if (audio.paused) audio.play();
+                            else audio.pause();
+                        } else {
+                            currentTrack = index;
+                            audio.src = playlist[currentTrack].src;
+                            audio.play();
+                            updatePlayerUI();
+                            // Update active class
+                            document.querySelectorAll('.playlist-item').forEach(el => el.classList.remove('active'));
+                            item.classList.add('active');
+                        }
+                    });
+                });
+            }
+
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => alert('Nomor tersalin: ' + text));
+            }
+
+            // QR Modal
+            const modal = document.getElementById('qrModal');
+            const qrImage = document.getElementById('qrImage');
+            const downloadBtn = document.getElementById('downloadQR');
+            const closeBtn = document.getElementById('closeQR');
+
+            window.showQRModal = function() {
+                qrImage.src = `https://cdn.nekohime.site/file/ui6oDlEx.jpg`;
+                modal.style.display = 'flex';
+            };
+
+            downloadBtn.addEventListener('click', () => {
+                const link = document.createElement('a');
+                link.href = qrImage.src;
+                link.download = 'qris-Veraa.png';
+                link.click();
+            });
+
+            closeBtn.addEventListener('click', () => modal.style.display = 'none');
+            window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+            // Navigation
+            function setActivePage(page) {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.dataset.page === page) item.classList.add('active');
+                });
+                currentPage = page;
+                renderCurrentPage();
+            }
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setActivePage(item.dataset.page);
+                });
+            });
+
+            setActivePage('home');
+            updatePlayerUI();
+        })();
+    </script>
+</body>
+  </html>
